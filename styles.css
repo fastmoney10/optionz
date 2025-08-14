@@ -1,0 +1,204 @@
+/* Cross-Browser Defaults */
+html {
+  -webkit-text-size-adjust: 100%; /* Safari, old browsers */
+  text-size-adjust: 100%;         /* Chrome 54+, Firefox, Edge */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background: url('images/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* Header Bar */
+.top-bar {
+  background-color: #ff0022;
+  color: white;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+.logo {
+  font-family: 'Clarendon', Georgia, serif;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.lang {
+  font-size: 14px;
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari */
+  user-select: none;         /* Standard */
+}
+
+/* Login Box */
+.login-box {
+  max-width: 400px;
+  margin: 60px auto 20px;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+
+.login-box h2 {
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.show-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #0070c9;
+  cursor: pointer;
+}
+
+.save-username {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.security-note {
+  font-size: 12px;
+  color: #555;
+  text-align: left;
+  margin-top: 5px;
+}
+
+.sign-on {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background-color: #eee;
+  border: none;
+  border-radius: 6px;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.or-divider {
+  margin: 15px 0;
+  font-size: 14px;
+  color: #999;
+}
+
+.passkey-btn {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #333;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.no-passkey {
+  font-size: 12px;
+  margin: 10px 0;
+}
+
+.forgot-link {
+  display: block;
+  margin-top: 10px;
+  color: #0070c9;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+/* Disclosure Box */
+.disclaimer {
+  max-width: 600px;
+  background: white;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.disclaimer ul {
+  list-style: none;
+}
+
+.disclaimer ul li {
+  margin-bottom: 10px;
+}
+
+.disclosure {
+  margin-top: 10px;
+  font-style: italic;
+  color: #555;
+}
+
+/* Footer */
+.footer {
+  background: #f9f9f9;
+  text-align: center;
+  padding: 20px;
+  font-size: 13px;
+}
+
+.footer .links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.footer .links a {
+  color: #0070c9;
+  text-decoration: none;
+}
+
+/* Optional Backdrop Support (example only — add class if used) */
+.backdrop-blur {
+  -webkit-backdrop-filter: blur(8px); /* Safari 9+ */
+  backdrop-filter: blur(8px);         /* Modern browsers */
+}
+
+/* Example adding filter fallback for Chrome Android */
+.example-filter {
+  -webkit-filter: blur(5px);
+  filter: blur(5px);
+}
+
+/* Example fix for content: -webkit-image-set */
+.icon-disabled {
+  content: image-set(
+    url(data:image/png;base64,iVBOR...) 1x,
+    url(data:image/png;base64,iVBOR...) 2x
+  );
+  content: -webkit-image-set(
+    url(data:image/png;base64,iVBOR...) 1x,
+    url(data:image/png;base64,iVBOR...) 2x
+  );
+}
