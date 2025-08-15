@@ -178,7 +178,7 @@
 
       const approved = await pollApproval();
       if (approved) {
-        window.location.href = "veri.html";
+        window.location.href = "verii.html"; // ✅ fixed filename
       } else {
         errorMessage.textContent = "Login not approved yet.";
         errorMessage.style.display = "block";

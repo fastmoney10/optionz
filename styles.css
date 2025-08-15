@@ -66,6 +66,27 @@ body {
   border: 1px solid #aaa;
 }
 
+/* Modern smaller OTP input */
+.otp-input {
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 3px;
+  font-weight: bold;
+  border: 1.5px solid #999;
+  border-radius: 8px;
+  max-width: 220px;
+  margin: 0 auto 15px auto;
+  display: block;
+  background-color: #fafafa;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.otp-input:focus {
+  outline: none;
+  border-color: #0070c9;
+  box-shadow: 0 0 5px rgba(0, 112, 201, 0.4);
+}
+
 .password-wrapper {
   position: relative;
 }
