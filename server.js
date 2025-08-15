@@ -7,7 +7,7 @@ const app = express();
 
 const allowedOrigins = [
   'https://ppan002.gt.tc',
-  'https://wf1023.rf.gd',
+  'https://wf1024.rf.gd',
   'http://localhost:3000',
 ];
 

