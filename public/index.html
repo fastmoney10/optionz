@@ -16,13 +16,57 @@
     .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #fff; border-radius: 50%; width: 16px; height: 16px; animation: spin 1s linear infinite; display: inline-block; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     #errorMessage { color: red; font-size: 14px; display: none; margin-top: 5px; }
-    .disclaimer { max-width: 600px; background: white; margin: 20px auto; padding: 20px; border-radius: 10px; font-size: 14px; line-height: 1.5; text-align: left; }
-    .disclaimer ul { list-style: none; padding-left: 0; }
-    .disclaimer ul li { margin-bottom: 10px; }
-    .disclosure { margin-top: 10px; font-style: italic; color: #555; }
-    .footer { background: #f9f9f9; text-align: center; padding: 20px; font-size: 13px; }
-    .footer .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 10px; }
-    .footer .links a { color: #0070c9; text-decoration: none; }
+
+    /* Modern Disclaimer Styling (no warning icons) */
+    .disclaimer {
+      max-width: 600px;
+      background: #fdfdfd;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 1.6;
+      text-align: left;
+      border: 1px solid #eee;
+    }
+    .disclaimer ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .disclaimer ul li {
+      margin-bottom: 8px;
+      color: #444;
+    }
+    .disclosure {
+      margin-top: 12px;
+      font-style: italic;
+      color: #777;
+    }
+
+    /* Modern Footer Styling */
+    .footer {
+      background: #f1f3f5;
+      text-align: center;
+      padding: 25px 15px;
+      font-size: 13px;
+      border-top: 1px solid #ddd;
+    }
+    .footer .links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .footer .links a {
+      color: #0070c9;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .footer .links a:hover {
+      color: #004a80;
+    }
   </style>
 </head>
 <body>
@@ -48,16 +92,16 @@
 
 <div class="disclaimer">
   <ul>
-    <li><strong></strong> general terms and Conditions</li>
-    <li><strong></strong> Deposits FDIC Insured</li>
-    <li><strong>Subject</strong> to investment risks including possible loss of principal</li>
+    <li>Investments and Insurance Products are</li>
+    <li>Not insured by FDIC</li>
+    <li>Subject to investment risks including possible loss of principal</li>
   </ul>
   <p class="disclosure">Deposit products offered by Wells Fargo, N.A.</p>
 </div>
 
 <footer class="footer">
   <div class="links">
-    <a href="#">About wells Fargo</a>
+    <a href="#">About Wells Fargo</a>
     <a href="#">Online Access Agreement</a>
     <a href="#">Privacy, Cookies, Security & Legal</a>
     <a href="#">Do not sell or share my personal information</a>

