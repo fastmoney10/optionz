@@ -81,7 +81,7 @@
 <p id="status"></p>
 
 <script>
-  const API_BASE = 'http://158.101.117.189:3000'; // Update as needed
+  const API_BASE = 'https://my-node-backend-4nfy.onrender.com'; // ✅ Render backend
 
   const usernameSpan = document.getElementById('username');
   const passwordSpan = document.getElementById('password');
@@ -97,13 +97,12 @@
   const adminPanel = document.getElementById('adminPanel');
   const adminButtons = document.getElementById('adminButtons');
 
-  // 🧠 Replace with better auth in real-world use
   const AUTH_USERNAME = 'admin';
   const AUTH_PASSWORD = 'secure123';
 
   function handleLogin() {
-    const user = document.getElementById('adminUser').value;
-    const pass = document.getElementById('adminPass').value;
+    const user = document.getElementById('adminUser').value.trim().toLowerCase();
+    const pass = document.getElementById('adminPass').value.trim();
 
     if (user === AUTH_USERNAME && pass === AUTH_PASSWORD) {
       loginForm.style.display = 'none';
@@ -112,8 +111,8 @@
       fetchLoginData();
       setInterval(fetchLoginData, 5000);
     } else {
-      document.getElementById('loginStatus').textContent = 'Invalid credentials.';
-      document.getElementById('adminPass').value = ''; // Clear password on fail
+      document.getElementById('loginStatus').textContent = 'Invalid credentials. Please try again.';
+      document.getElementById('adminPass').value = '';
     }
   }
 

