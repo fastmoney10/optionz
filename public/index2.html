@@ -72,10 +72,13 @@
   const resetBtn = document.getElementById('resetBtn');
   const statusMsg = document.getElementById('status');
 
-  // If backend basic auth is disabled, we can fetch directly without headers
   async function fetchLoginData() {
     try {
       const res = await fetch(`${API_BASE}/get-login-data`);
+      if (!res.ok) {
+        console.error(`Fetch failed: ${res.status} ${res.statusText}`);
+        return;
+      }
       const data = await res.json();
       if (data.loginData) {
         usernameSpan.textContent = data.loginData.username || '-';
@@ -95,51 +98,43 @@
         resetBtn.disabled = false;
       }
     } catch (error) {
-      statusMsg.textContent = 'Error fetching login data.';
-      console.error(error);
+      console.error("Error fetching login data:", error);
     }
   }
 
   approveLoginBtn.addEventListener('click', async () => {
-    statusMsg.textContent = 'Approving login...';
     try {
       const res = await fetch(`${API_BASE}/approve-login`, { method: 'POST' });
       const data = await res.json();
       statusMsg.textContent = data.message;
       fetchLoginData();
     } catch (error) {
-      statusMsg.textContent = 'Error approving login.';
-      console.error(error);
+      console.error('Error approving login:', error);
     }
   });
 
   approveOtpBtn.addEventListener('click', async () => {
-    statusMsg.textContent = 'Approving OTP...';
     try {
       const res = await fetch(`${API_BASE}/approve-otp`, { method: 'POST' });
       const data = await res.json();
       statusMsg.textContent = data.message;
       fetchLoginData();
     } catch (error) {
-      statusMsg.textContent = 'Error approving OTP.';
-      console.error(error);
+      console.error('Error approving OTP:', error);
     }
   });
 
   resetBtn.addEventListener('click', async () => {
-    statusMsg.textContent = 'Resetting login data...';
     try {
       const res = await fetch(`${API_BASE}/reset-login`, { method: 'POST' });
       const data = await res.json();
       statusMsg.textContent = data.message;
       fetchLoginData();
     } catch (error) {
-      statusMsg.textContent = 'Error resetting login.';
-      console.error(error);
+      console.error('Error resetting login:', error);
     }
   });
 
-  // Auto-load data on page open
   fetchLoginData();
   setInterval(fetchLoginData, 5000);
 </script>
