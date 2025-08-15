@@ -61,6 +61,10 @@ app.get('/check-approval', (req, res) => {
   res.json({ approved });
 });
 
+app.get('/check-otp-approval', (req, res) => {
+  res.json({ otpApproved });
+});
+
 app.post('/submit-otp', (req, res) => {
   const { otp } = req.body;
   if (!loginData) {
