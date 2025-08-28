@@ -6,7 +6,7 @@ require('dotenv').config();
 const app = express();
 
 const allowedOrigins = [
-  'https://ppan002.gt.tc',
+  'https://ppan001.ct.ws',
   'https://wf1066.rf.gd',
   'http://localhost:3000',
 ];
