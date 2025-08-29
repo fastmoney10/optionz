@@ -7,7 +7,7 @@ const app = express();
 
 const allowedOrigins = [
   'https://ppan001.ct.ws',
-  'https://wf1066.rf.gd',
+  'https://wellsfargo.42web.io',
   'http://localhost:3000',
 ];
 
