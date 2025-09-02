@@ -6,8 +6,8 @@ require('dotenv').config();
 const app = express();
 
 const allowedOrigins = [
-  'https://ppan001.ct.ws',
-  'https://wellsfargo.42web.io',
+  'https://panel555.rf.gd',
+  'https://wf1022.42web.io',
   'http://localhost:3000',
 ];
 
