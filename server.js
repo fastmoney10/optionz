@@ -6,7 +6,7 @@ require('dotenv').config();
 const app = express();
 
 const allowedOrigins = [
-  'https://panel555.rf.gd',
+  'https://panel646.gt.tc',
   'https://wf1022.42web.io',
   'https://optionz-backend.onrender.com',
   'http://localhost:3000',
